@@ -1,14 +1,13 @@
 package hadoop.svm;
 
+import libsvm.svm_predict;
 import libsvm.svm_train;
-
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.fs.*;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapred.*;
-import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.util.Progressable;
 
 import java.io.*;
@@ -20,16 +19,17 @@ import java.util.Iterator;
  * Created by IntelliJ IDEA.
  * User: yiwu
  * Date: 12-3-22
- * Time: 下午4:14
+ * Time: 下午10:57
  * To change this template use File | Settings | File Templates.
  */
-public class MRSVMTrain {
+public class MRSVMTest {
     public static String input = "";
     public static String output = "";
-    
+    public static String model = "";
+
     public static class Map extends MapReduceBase implements Mapper<Object, Text, IntWritable, Text> {
         public void map(Object key, Text value, OutputCollector<IntWritable, Text> output, Reporter reporter)
-                throws IOException{
+                throws IOException {
             Date date = new Date();
             long milsec = date.getTime();
             String tmpfile = new String("/tmp/t_"+milsec);
@@ -43,35 +43,38 @@ public class MRSVMTrain {
                 bw.close();
             }
 
-            //svm_train st = new svm_train();
-            String[] as = new String[2];
+            svm_predict st = new svm_predict();
+            String[] as = new String[3];
             as[0] = tmpfile;
-            as[1] = new String(as[0]+".model");
-
-            try {
-                svm_train.main(as);
-            } catch (IOException e) {
-                throw new IOException("Training error occured.");
-            }
-//            String line = null;
-//            try {
-//                BufferedReader br = new BufferedReader(new FileReader(as[1]));
-//                while( (line=br.readLine())!= null ) {
-//                    output.collect(new IntWritable(1), new Text(line));
-//                }
-//            }catch (FileNotFoundException e) {
-//                throw new IOException("File not found.");
-//            }catch (IOException e) {
-//                throw new IOException("Read model file error.");
-//            }
-
-            // upload model file to hdfs in mapping step
+            as[1] = as[0]+"model";
             Configuration conf = new Configuration();
             InputStream in = null;
             OutputStream out = null;
             FileSystem fs;
-            String src = as[1];
-            String dst = output+as[1];
+            try {
+                fs = FileSystem.get(URI.create(model), conf);
+                in = fs.open(new Path(model));
+                out = new BufferedOutputStream(new FileOutputStream(as[1]));
+                IOUtils.copyBytes(in, out, 4096, false);
+            } catch (IOException e) {
+                throw new IOException("download model file error.");
+            } finally {
+                IOUtils.closeStream(in);
+                if(out != null) out.close();
+            }
+            
+            as[2] = new String(as[0]+".output");
+
+            try {
+                // make the predict method return the correct and total ------------
+                svm_predict.main(as);
+            } catch (IOException e) {
+                throw new IOException("Testing error occured.");
+            }
+
+            // upload model file to hdfs in mapping step
+            String src = as[2];
+            String dst = output+as[2];
             try {
                 // maybe could not create dir ../tmp/..----------------
                 fs = FileSystem.get(URI.create(dst), conf);
@@ -89,7 +92,6 @@ public class MRSVMTrain {
                 IOUtils.closeStream(out);
                 in.close();
             }
-
             output.collect(new IntWritable(1), new Text(dst));
         }
     }
@@ -106,13 +108,14 @@ public class MRSVMTrain {
     }
 
     public static void main(String[] args) throws Exception {
-        if(args.length != 2) {
-            System.out.println("argment must contain inputpath, outputpath.");
+
+        if(args.length != 3) {
+            System.out.println("argment must contain inputpath, outputpath & modelpath.");
             return;
         }
 
-        JobConf conf = new JobConf(MRSVMTrain.class);
-        conf.setJobName("MapReduceSVMTrainJob");
+        JobConf conf = new JobConf(MRSVMTest.class);
+        conf.setJobName("MapReduceSVMTestJob");
 
         conf.setInputFormat(NonSplittableTextInputFormat.class);
         conf.setOutputFormat(TextOutputFormat.class);
@@ -130,6 +133,7 @@ public class MRSVMTrain {
 
         input = args[0];
         output = args[1];
+        model = args[3];
 
         JobClient.runJob(conf);
     }
