@@ -1,5 +1,12 @@
 package hadoop.tools;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.*;
+import java.lang.Integer;
+import java.lang.Double;
+
 /**
  * Created by IntelliJ IDEA.
  * User: yiwu
@@ -10,11 +17,184 @@ package hadoop.tools;
 public class SvmMerger extends Merger{
 
     public boolean merge() {
+        BufferedWriter bw;
+        List<BufferedReader> brs;
+        try {
+            brs = getBufferedReaders();
+            bw = getBufferedWriter();
+        } catch (IOException e) {
+            System.out.println("file opened error.");
+            e.printStackTrace();
+            return false;
+        }
 
+        if(brs.size() == 0) {
+            System.out.println("There is no file to be merged up.");
+            return false;
+        }
+        String st="", kt="", l1="", l2="", tmp="";
+        double gm, rho;
+        int nrc, tsv;
+        Map<String, Integer> ns = new HashMap<String, Integer>();
+        // initialization
+        gm = 0; rho = 0; nrc=0; tsv = 0;
+        BufferedReader br;
+        String line = "";
+        try {
+            for(int i=0;i<brs.size();i++) {
+                br = brs.get(i);
+                line = br.readLine();       //svm_type
+                st = getWord(line, 1);
+                line = br.readLine();       //kernel_type
+                kt = getWord(line, 1);
+                line = br.readLine();       //gamma
+                tmp = getWord(line, 1);
+                gm += Double.valueOf(tmp);
+                line = br.readLine();       //nr_class
+                tmp = getWord(line, 1);
+                nrc = Integer.valueOf(tmp);
+                line = br.readLine();       //total_sv
+                tmp = getWord(line, 1);
+                tsv += Integer.valueOf(tmp);
+                line = br.readLine();       //rho
+                tmp = getWord(line, 1);
+                rho += Double.valueOf(tmp);
+                line = br.readLine();       //label
+                l1 = getWord(line, 1);
+                l2 = getWord(line, 2);
+                line = br.readLine();       //nr_sv
+                tmp = getWord(line, 1);
+                if(!ns.containsKey(l1))
+                    ns.put(l1, 0);
+                ns.put(l1, ns.get(l1) + Integer.valueOf(tmp));
+                tmp = getWord(line, 2);
+                if(!ns.containsKey(l2))
+                    ns.put(l2, 0);
+                ns.put(l2, ns.get(l2) + Integer.valueOf(tmp));
+                br.readLine();              //SV
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return false;
+        } catch (NullPointerException e) {
+            System.out.println("null pointer exception. "+line);
+            e.printStackTrace();
+            return false;
+        }
+//        System.out.println("svm_type "+st);
+//        System.out.println("kernel_type "+kt);
+//        System.out.println("gamma "+String.valueOf(gm/brs.size()));
+//        System.out.println("nr_class "+String.valueOf(nrc));
+//        System.out.println("total_sv "+String.valueOf(tsv));
+//        System.out.println("rho "+String.valueOf(rho/brs.size()));
+//        String print = "";
+//        Iterator<Map.Entry<String, Integer>> it = ns.entrySet().iterator();
+//        while(it.hasNext()) {
+//            Map.Entry entry = it.next();
+//            print += entry.getKey();
+//            print += " ";
+//        }
+//        System.out.println("label "+print);
+//        print = "";
+//        it = ns.entrySet().iterator();
+//        while(it.hasNext()) {
+//            Map.Entry entry = it.next();
+//            print += entry.getValue();
+//            print += " ";
+//        }
+//        System.out.println("nr_sv "+print);
+//        System.out.println("SV");
+        try {
+            bw.write("svm_type "+st);
+            bw.newLine();
+            bw.write("kernel_type "+kt);
+            bw.newLine();
+            bw.write("gamma "+String.valueOf(gm/brs.size()));
+            bw.newLine();
+            bw.write("nr_class "+String.valueOf(nrc));
+            bw.newLine();
+            bw.write("total_sv "+String.valueOf(tsv));
+            bw.newLine();
+            bw.write("rho "+String.valueOf(rho/brs.size()));
+            bw.newLine();
+            String print = "";
+            Iterator<Map.Entry<String, Integer>> it = ns.entrySet().iterator();
+            while(it.hasNext()) {
+                Map.Entry entry = it.next();
+                print += entry.getKey();
+                print += " ";
+            }
+            bw.write("label "+print);
+            bw.newLine();
+            print = "";
+            it = ns.entrySet().iterator();
+            while(it.hasNext()) {
+                Map.Entry entry = it.next();
+                print += entry.getValue();
+                print += " ";
+            }
+            bw.write("nr_sv "+print);
+            bw.newLine();
+            bw.write("SV");
+            bw.newLine();
+            bw.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for(int i=0;i<brs.size();i++) {
+            br = brs.get(i);
+            try {
+                while( (line=br.readLine()) != null) {
+                    bw.write(line);
+                    bw.newLine();
+                }
+                bw.flush();
+            } catch (IOException e) {
+                System.out.println("error occured in file: "+i);
+                e.printStackTrace();
+                return false;
+            }
+        }
+        try {
+            bw.close();
+            for(int i=0;i<brs.size();i++)
+                brs.get(i).close();
+        } catch (IOException e) {
+            System.out.println("file close error.");
+            e.printStackTrace();
+            return false;
+        }
         return true;
     }
 
     public SvmMerger(String p, String f) {
         super(p, f);
+    }
+    
+    public String getWord(String line, int idx) throws IOException{
+        String tmp;
+        //System.out.println("get index: "+idx+" from "+line);
+        List<String> s = new ArrayList<String>();
+        int i;
+        while(true) {
+            i = line.indexOf(' ');
+            if(i == -1) {
+                //System.out.println("    "+line+"+");
+                s.add(line);
+                break;
+            }
+            tmp = line.substring(0,i);
+            line = line.substring(i+1);
+            //System.out.println("    "+tmp+"+"+line);
+            s.add(tmp);
+        }
+        if(s.size() <= i)
+            throw new IOException("get word error");
+        //System.out.println("-->"+s.toString()+" ++ "+idx+" -- "+s.get(idx));
+        return s.get(idx);
     }
 }

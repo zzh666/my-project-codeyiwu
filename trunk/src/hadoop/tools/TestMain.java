@@ -27,9 +27,17 @@ public class TestMain {
         for(int i=0;i<files.length;i++)
             System.out.println(files[i].getAbsolutePath());
 
-        Merger merger = SplitnMergeFactory.createMerger("D:/test/expr3.log_bu_splits/",
-                "tr");
+        Merger merger = SplitnMergeFactory.createMerger("D:/test/expr3.log_bu_splits/","tr");
         merger.merge();
+
+        Merger svmmerger = SplitnMergeFactory.createMerger("D:/test/", "model", SplitnMergeFactory.MergeType.SVM);
+        svmmerger.merge();
+        
+//        String test = "1_2_3_4";
+//        int i = test.indexOf('_');
+//        String substr = test.substring(0,i);
+//        System.out.println(substr);
+
         System.out.println("hello world.");
     }
 }
