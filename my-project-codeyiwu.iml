@@ -7,6 +7,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="hadop-1.0.1" level="project" />
+    <orderEntry type="library" name="libsvm-3.11" level="project" />
   </component>
 </module>
 
