@@ -21,7 +21,7 @@ public abstract class Merger {
     
     public File[] getMergeFiles() {
         File file = new File(path);
-        mergefile = file.getAbsolutePath()+"/merge."+filter;
+        mergefile = file.getAbsolutePath()+"/merge."+filter+"_";
         File[] files = file.listFiles(new ExtenFileFilter(filter));
         System.out.println(mergefile);
         return  files;
