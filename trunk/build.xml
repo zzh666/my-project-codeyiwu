@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name = "DistributedSVM" default="getBaseDir" basedir=".">
+
+    <property name="src" location="./src" />
+    <property name="build" location="./tmp/build/classes" />
+    <property name="dist" location="./tmp/lib" />
+    <property name="lib" location="./lib" />
+
+    <path id="project.classpath">
+        <fileset dir="${lib}">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
+    <target name="all" depends="clean,sshexec"></target>
+
+    <!-- Generate directory -->
+    <target name="init">
+        <tstamp />
+        <mkdir dir="${build}" />
+        <mkdir dir="${dist}" />
+    </target>
+
+    <!-- compile java code -->
+    <target name="compile" depends="init">
+        <javac srcdir="${src}" destdir="${build}" includeantruntime="no">
+            <compilerarg line="-encoding GBK" />
+            <classpath refid="project.classpath" />
+        </javac>
+    </target>
+
+    <!-- jar -->
+    <target name="dist" depends="compile">
+        <mkdir dir="${dist}" />
+        <jar jarfile="${lib}/hadoop_svm.jar" basedir="${build}" />
+    </target>
+
+    <!-- clean -->
+    <target name="clean">
+        <delete dir="${build}" />
+        <delete dir="${dist}" />
+        <echo message="clean dir=build,dist" />
+    </target>
+
+    <!-- run -->
+    <target name="run" depends="dist">
+        <java classpath="${build}" classname="hadoop.tools.Test">
+            <classpath refid="project.classpath" />
+            <!--<classpath refid="${build}" />-->
+        </java>
+    </target>
+
+    <!-- sftp -->
+    <target name="sshexec" depends="run">
+        <!--<scp todir="hadoop:hadoop@192.168.1.1:/tmp/" trust="true">-->
+            <!--<fileset dir="${dist}" />-->
+        <!--</scp>-->
+        <echo message="scp them to remote host." />
+    </target>
+
+
+    <target name="getBaseDir">
+        <echo message="The base dir is: ${basedir}" />
+    </target>
+</project>
