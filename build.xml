@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<project name = "DistributedSVM" default="getBaseDir" basedir=".">
+<project name = "BUILD" default="all" basedir=".">
 
     <property name="src" location="./src" />
-    <property name="build" location="./tmp/build/classes" />
-    <property name="dist" location="./tmp/lib" />
-    <property name="lib" location="./lib" />
+    <property name="build" location="./build" />
+    <property name="dist" location="./lib" />
 
     <path id="project.classpath">
-        <fileset dir="${lib}">
+        <fileset dir="${dist}">
             <include name="*.jar" />
         </fileset>
     </path>
@@ -18,7 +17,6 @@
     <target name="init">
         <tstamp />
         <mkdir dir="${build}" />
-        <mkdir dir="${dist}" />
     </target>
 
     <!-- compile java code -->
@@ -32,14 +30,13 @@
     <!-- jar -->
     <target name="dist" depends="compile">
         <mkdir dir="${dist}" />
-        <jar jarfile="${lib}/hadoop_svm.jar" basedir="${build}" />
+        <jar jarfile="${dist}/hadoop_svm.jar" basedir="${build}" />
     </target>
 
     <!-- clean -->
     <target name="clean">
         <delete dir="${build}" />
-        <delete dir="${dist}" />
-        <echo message="clean dir=build,dist" />
+        <echo message="clean dir=build" />
     </target>
 
     <!-- run -->
@@ -58,8 +55,4 @@
         <echo message="scp them to remote host." />
     </target>
 
-
-    <target name="getBaseDir">
-        <echo message="The base dir is: ${basedir}" />
-    </target>
 </project>
