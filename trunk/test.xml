@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name = "TEST" default="getBaseDir" basedir=".">
+
+    <property name="hadoop" location="/home/hadoop/hadoop" />
+
+    <property name="bin" location="${hadoop}/bin" />
+
+    <target name="scp">
+
+    </target>
+
+    <!-- hadoop ops -->
+    <target name="stop">
+        <exec executable="${bin}/stop-all.sh" />
+    </target>
+
+    <target name="start" depends="stop">
+        <exec executable="${bin}/start-all.sh" />
+    </target>
+
+    <target name="format" depends="stop">
+        <exec executable="${bin}/hadoop namenode -format" />
+    </target>
+
+    <target name="run" depends="start">
+        <exec executable="" />
+    </target>
+
+    <target name="getBaseDir">
+        <echo output="Hello world: ${basedir}" />
+    </target>
+</project>
