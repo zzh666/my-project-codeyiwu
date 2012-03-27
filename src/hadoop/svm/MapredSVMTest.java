@@ -2,32 +2,36 @@ package hadoop.svm;
 
 import hadoop.tools.TestRes;
 import libsvm.svm_predict;
-import libsvm.svm_train;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapred.*;
+import org.apache.hadoop.mapred.FileSplit;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.apache.hadoop.util.GenericOptionsParser;
 import org.apache.hadoop.util.Progressable;
 
 import java.io.*;
 import java.net.URI;
 import java.util.Date;
-import java.util.Iterator;
 
 /**
  * Created by IntelliJ IDEA.
  * User: yiwu
- * Date: 12-3-22
- * Time: 下午10:57
+ * Date: 12-3-27
+ * Time: 下午9:09
  * To change this template use File | Settings | File Templates.
  */
-public class MRSVMTest {
+public class MapredSVMTest {
 
-    public static class Map extends MapReduceBase implements Mapper<Object, Text, IntWritable, IntWritable> {
-        public void map(Object key, Text value, OutputCollector<IntWritable, IntWritable> output, Reporter reporter)
-                throws IOException {
+    public static class Map extends Mapper<Object, Text, IntWritable, IntWritable> {
+        public void map(Object key, Text value, Context context) throws IOException,
+                InterruptedException {
 
             Date date = new Date();
             long milsec = date.getTime();
@@ -62,7 +66,7 @@ public class MRSVMTest {
                 IOUtils.closeStream(in);
                 if(out != null) out.close();
             }
-            
+
             as[2] = new String(as[0]+".output");
             TestRes res = null;
             try {
@@ -92,53 +96,44 @@ public class MRSVMTest {
                 IOUtils.closeStream(out);
                 in.close();
             }
-            output.collect(new IntWritable(1), new IntWritable(res.getPre()));
-            output.collect(new IntWritable(2), new IntWritable(res.getTot()));
+            context.write(new IntWritable(1), new IntWritable(res.getPre()));
+            context.write(new IntWritable(2), new IntWritable(res.getTot()));
         }
     }
+    public static class Reduce extends Reducer<IntWritable, IntWritable, Text, Text> {
 
-    public static class Reduce extends MapReduceBase implements Reducer<IntWritable, IntWritable, Text, Text> {
-        @Override
-        public void reduce(IntWritable key, Iterator<IntWritable> values,
-                           OutputCollector<Text, Text> output, Reporter reporter)
-                throws IOException {
-            int i = 0;
-            while(values.hasNext()) {
-                //output.collect(values.next(), new Text(""));
-                i += values.next().get();
-                output.collect(new Text(key.toString()), new Text(new IntWritable(i).toString()));
+        public void reduce(IntWritable key, Iterable<IntWritable> values, Context context)
+                throws IOException, InterruptedException {
+            int i=0;
+            for( IntWritable val : values) {
+                i += val.get();
             }
+            context.write(new Text(), new Text(new IntWritable(i).toString())); ;
         }
     }
 
     public static void main(String[] args) throws Exception {
-
-        if(args.length != 3) {
-            System.out.println("argment must contain inputpath, outputpath & modelpath.");
-            return;
+        Configuration conf = new Configuration();
+        String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
+        if(otherArgs.length != 2) {
+            System.err.println("Uncompletely args.");
+            System.exit(2);
         }
 
-        JobConf conf = new JobConf(hadoop.svm.MRSVMTest.class);
-        conf.setJobName("MapReduceSVMTestJob");
+        Job job = new Job(conf, "MapredSVMTrain");
+        job.setJarByClass(MapredTest.class);
+        job.setMapperClass(Map.class);
+        job.setReducerClass(Reduce.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(Text.class);
 
-        conf.setInputFormat(hadoop.svm.NonSplittableTextInputFormat.class);
-        conf.setOutputFormat(TextOutputFormat.class);
+        conf.set("input",  otherArgs[0]);
+        conf.set("output", otherArgs[1]);
+        conf.set("model",  otherArgs[2]);
 
-        conf.setMapperClass(Map.class);
-        conf.setReducerClass(Reduce.class);
-        conf.setOutputKeyClass(Text.class);
-        conf.setOutputValueClass(Text.class);
+        FileInputFormat.addInputPath(job, new Path(otherArgs[0]));
+        FileOutputFormat.setOutputPath(job, new Path(otherArgs[1]));
 
-        conf.setMapOutputKeyClass(IntWritable.class);
-        conf.setMapOutputValueClass(Text.class);
-
-        FileInputFormat.addInputPath(conf, new Path(args[0]));
-        FileOutputFormat.setOutputPath(conf, new Path(args[1]));
-
-        conf.set("input", args[0]);
-        conf.set("output", args[1]);
-        conf.set("model", args[2]);
-
-        JobClient.runJob(conf);
+        System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
 }

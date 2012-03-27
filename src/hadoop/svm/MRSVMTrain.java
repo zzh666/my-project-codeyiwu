@@ -118,10 +118,32 @@ public class MRSVMTrain {
             //return;
         //}
 
-        JobConf conf = new JobConf(hadoop.svm.MRSVMTrain.class);
+//        JobConf conf = new JobConf(hadoop.svm.MRSVMTrain.class);
+//        conf.setJobName("MapReduceSVMTrainJob");
+//
+//        conf.setInputFormat(hadoop.svm.NonSplittableTextInputFormat.class);
+//        conf.setOutputFormat(TextOutputFormat.class);
+//
+//        conf.setMapperClass(Map.class);
+//        conf.setReducerClass(Reduce.class);
+//        conf.setOutputKeyClass(Text.class);
+//        conf.setOutputValueClass(Text.class);
+//
+//        conf.setMapOutputKeyClass(IntWritable.class);
+//        conf.setMapOutputValueClass(Text.class);
+//
+//        conf.set("input", args[0]);
+//        conf.set("output", args[1]);
+//
+//        FileInputFormat.addInputPath(conf, new Path(args[0]));
+//        FileOutputFormat.setOutputPath(conf, new Path(args[1]));
+//
+//        JobClient.runJob(conf);
+
+        JobConf conf = new JobConf(MRSVMTrain.class);
         conf.setJobName("MapReduceSVMTrainJob");
 
-        conf.setInputFormat(hadoop.svm.NonSplittableTextInputFormat.class);
+        conf.setInputFormat(WholeFileInputFormat.class);
         conf.setOutputFormat(TextOutputFormat.class);
 
         conf.setMapperClass(Map.class);
@@ -131,7 +153,7 @@ public class MRSVMTrain {
 
         conf.setMapOutputKeyClass(IntWritable.class);
         conf.setMapOutputValueClass(Text.class);
-        
+
         conf.set("input", args[0]);
         conf.set("output", args[1]);
 
