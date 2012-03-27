@@ -44,8 +44,11 @@ public class Main {
     }
     
     public static void main(String[] args) {
-        System.out.println(args.toString());
-        if(args.length != 4) {
+        for(int i=0;i<args.length;i++) 
+            System.out.print(args[i]+"");
+        System.out.println();
+        
+        if(args.length != 3) {
             System.out.println("argments number error. please input 4 argments");
             System.out.println("+\'a\' String int for trainSplit()");
             System.out.println("+\'b\' String String for trainMerge()");
@@ -54,23 +57,23 @@ public class Main {
             return;
         }
 
-        char x = args[1].charAt(0);
+        char x = args[0].charAt(0);
         switch (x) {
             case 'a':
                 System.out.println("-->do trainSplit method with: "+args.toString());
-                trainSplit(args[2], Integer.valueOf(args[3]));
+                trainSplit(args[1], Integer.valueOf(args[2]));
                 break;
             case 'b':
                 System.out.println("-->do trainMerge method with: "+args.toString());
-                trainMerge(args[2], args[3]);
+                trainMerge(args[1], args[2]);
                 break;
             case 'c':
                 System.out.println("-->do testSplit method with: "+args.toString());
-                testSplit(args[2], Integer.valueOf(args[3]));
+                testSplit(args[1], Integer.valueOf(args[2]));
                 break;
             case 'd':
                 System.out.println("-->do testMerge method with: "+args.toString());
-                testMerge(args[2], args[3]);
+                testMerge(args[1], args[2]);
                 break;
             default:
                 System.out.println("error args[1], please instead it of \'a\' \'b\' \'c\' or \'d\'");
