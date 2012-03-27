@@ -30,6 +30,8 @@ public class MRSVMTrain {
     public static class Map extends MapReduceBase implements Mapper<Object, Text, IntWritable, Text> {
         public void map(Object key, Text value, OutputCollector<IntWritable, Text> output, Reporter reporter)
                 throws IOException{
+
+            // write inputstream to localfile at /tmp/ directory
             Date date = new Date();
             long milsec = date.getTime();
             String tmpfile = new String("/tmp/t_"+milsec);
@@ -43,7 +45,7 @@ public class MRSVMTrain {
                 bw.close();
             }
 
-            //svm_train st = new svm_train();
+            // train tmp localfile and output model
             String[] as = new String[2];
             as[0] = tmpfile;
             as[1] = new String(as[0]+".model");
