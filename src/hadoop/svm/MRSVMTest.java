@@ -121,7 +121,7 @@ public class MRSVMTest {
         JobConf conf = new JobConf(hadoop.svm.MRSVMTest.class);
         conf.setJobName("MapReduceSVMTestJob");
 
-        conf.setInputFormat(hadoop.svm.NonSplittableTextInputFormat.class);
+        conf.setInputFormat(WholeFileInputFormat.class);
         conf.setOutputFormat(TextOutputFormat.class);
 
         conf.setMapperClass(Map.class);

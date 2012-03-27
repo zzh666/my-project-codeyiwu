@@ -122,7 +122,7 @@ public class MapredSVMTest {
         }
 
         Job job = new Job(conf, "MapredSVMTrain");
-        job.setJarByClass(MapredTest.class);
+        job.setJarByClass(MapredSVMTest.class);
         job.setMapperClass(Map.class);
         job.setReducerClass(Reduce.class);
         job.setOutputKeyClass(Text.class);

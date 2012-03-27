@@ -1,6 +1,7 @@
 package hadoop.svm;
 
 import libsvm.svm_train;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.io.IOUtils;
