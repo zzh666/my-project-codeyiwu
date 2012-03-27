@@ -24,9 +24,6 @@ import java.util.Iterator;
  * To change this template use File | Settings | File Templates.
  */
 public class MRSVMTest {
-    public static String input = "";
-    public static String output = "";
-    public static String model = "";
 
     public static class Map extends MapReduceBase implements Mapper<Object, Text, IntWritable, IntWritable> {
         public void map(Object key, Text value, OutputCollector<IntWritable, IntWritable> output, Reporter reporter)
@@ -53,6 +50,7 @@ public class MRSVMTest {
             InputStream in = null;
             OutputStream out = null;
             FileSystem fs;
+            String model = conf.get("model");
             try {
                 fs = FileSystem.get(URI.create(model), conf);
                 in = fs.open(new Path(model));
@@ -76,7 +74,7 @@ public class MRSVMTest {
 
             // upload model file to hdfs in mapping step
             String src = as[2];
-            String dst = output+as[2];
+            String dst = conf.get("output")+as[2];
             try {
                 // maybe could not create dir ../tmp/..----------------
                 fs = FileSystem.get(URI.create(dst), conf);
@@ -120,10 +118,10 @@ public class MRSVMTest {
             return;
         }
 
-        JobConf conf = new JobConf(MRSVMTest.class);
+        JobConf conf = new JobConf(hadoop.svm.MRSVMTest.class);
         conf.setJobName("MapReduceSVMTestJob");
 
-        conf.setInputFormat(NonSplittableTextInputFormat.class);
+        conf.setInputFormat(hadoop.svm.NonSplittableTextInputFormat.class);
         conf.setOutputFormat(TextOutputFormat.class);
 
         conf.setMapperClass(Map.class);
@@ -137,9 +135,9 @@ public class MRSVMTest {
         FileInputFormat.addInputPath(conf, new Path(args[0]));
         FileOutputFormat.setOutputPath(conf, new Path(args[1]));
 
-        input = args[0];
-        output = args[1];
-        model = args[3];
+        conf.set("input", args[0]);
+        conf.set("output", args[1]);
+        conf.set("model", args[3]);
 
         JobClient.runJob(conf);
     }
