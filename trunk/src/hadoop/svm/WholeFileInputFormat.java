@@ -25,13 +25,10 @@ public class WholeFileInputFormat extends FileInputFormat<NullWritable, Text> {
     protected boolean isSplitable(FileSystem fs, Path filename) {
         return false;
     }
-
     @Override
     public RecordReader<NullWritable, Text> getRecordReader(
             InputSplit split, JobConf job, Reporter reporter)
             throws IOException {
-
         return new WholeFileRecordReader((FileSplit)split, job);
     }
-
 }
