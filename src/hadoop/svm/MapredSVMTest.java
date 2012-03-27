@@ -114,8 +114,9 @@ public class MapredSVMTest {
 
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration();
-        String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
-        if(otherArgs.length != 2) {
+        //String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
+        //if(otherArgs.length != 2) {
+        if(args.length != 2) {
             System.err.println("Uncompletely args.");
             System.exit(2);
         }
@@ -127,12 +128,12 @@ public class MapredSVMTest {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(Text.class);
 
-        conf.set("input",  otherArgs[0]);
-        conf.set("output", otherArgs[1]);
-        conf.set("model",  otherArgs[2]);
+        conf.set("input",  args[0]);
+        conf.set("output", args[1]);
+        conf.set("model",  args[2]);
 
-        FileInputFormat.addInputPath(job, new Path(otherArgs[0]));
-        FileOutputFormat.setOutputPath(job, new Path(otherArgs[1]));
+        FileInputFormat.addInputPath(job, new Path(args[0]));
+        FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
         System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
