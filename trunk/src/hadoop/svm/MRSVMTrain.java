@@ -118,10 +118,10 @@ public class MRSVMTrain {
             //return;
         //}
 
-        JobConf conf = new JobConf(MRSVMTrain.class);
+        JobConf conf = new JobConf(hadoop.svm.MRSVMTrain.class);
         conf.setJobName("MapReduceSVMTrainJob");
 
-        conf.setInputFormat(NonSplittableTextInputFormat.class);
+        conf.setInputFormat(hadoop.svm.NonSplittableTextInputFormat.class);
         conf.setOutputFormat(TextOutputFormat.class);
 
         conf.setMapperClass(Map.class);
