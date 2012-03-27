@@ -3,6 +3,7 @@ package hadoop.svm;
 import libsvm.svm_train;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.IntWritable;
@@ -10,6 +11,7 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapred.*;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.util.Progressable;
+import org.apache.hadoop.util.Tool;
 
 import java.io.*;
 import java.net.URI;
@@ -24,13 +26,11 @@ import java.util.Iterator;
  * To change this template use File | Settings | File Templates.
  */
 public class MRSVMTrain {
-    public static String input = "";
-    public static String output = "";
     
     public static class Map extends MapReduceBase implements Mapper<Object, Text, IntWritable, Text> {
         public void map(Object key, Text value, OutputCollector<IntWritable, Text> output, Reporter reporter)
                 throws IOException{
-
+            
             // write inputstream to localfile at /tmp/ directory
             Date date = new Date();
             long milsec = date.getTime();
@@ -69,11 +69,14 @@ public class MRSVMTrain {
 
             // upload model file to hdfs in mapping step
             Configuration conf = new Configuration();
+            // get input & output from conf
+            String inputp = conf.get("input");
+            String outputp = conf.get("output");
             InputStream in = null;
             OutputStream out = null;
             FileSystem fs;
             String src = as[1];
-            String dst = output+as[1];
+            String dst = outputp+as[1];
             try {
                 // maybe could not create dir ../tmp/..----------------
                 fs = FileSystem.get(URI.create(dst), conf);
@@ -128,12 +131,12 @@ public class MRSVMTrain {
 
         conf.setMapOutputKeyClass(IntWritable.class);
         conf.setMapOutputValueClass(Text.class);
+        
+        conf.set("input", args[0]);
+        conf.set("output", args[1]);
 
         FileInputFormat.addInputPath(conf, new Path(args[0]));
         FileOutputFormat.setOutputPath(conf, new Path(args[1]));
-
-        input = args[0];
-        output = args[1];
 
         JobClient.runJob(conf);
     }
