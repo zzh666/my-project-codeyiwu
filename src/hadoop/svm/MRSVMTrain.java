@@ -108,10 +108,12 @@ public class MRSVMTrain {
     }
 
     public static void main(String[] args) throws Exception {
-        if(args.length != 2) {
-            System.out.println("argment must contain inputpath, outputpath.");
-            return;
-        }
+        //if(args.length != 2) {
+        for(int i=0;i<args.length;i++)
+            System.out.println(args[i]);
+            //System.out.println("argment must contain inputpath, outputpath.");
+            //return;
+        //}
 
         JobConf conf = new JobConf(MRSVMTrain.class);
         conf.setJobName("MapReduceSVMTrainJob");

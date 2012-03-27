@@ -12,6 +12,7 @@ import org.apache.hadoop.mapred.TextInputFormat;
  * To change this template use File | Settings | File Templates.
  */
 public class NonSplittableTextInputFormat extends TextInputFormat {
+    @Override
     protected boolean isSplitable(FileSystem fs, Path file) {
         return false;
     }

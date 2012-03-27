@@ -1,5 +1,7 @@
 package libsvm;
 
+import hadoop.tools.TestRes;
+
 import java.io.*;
 import java.util.*;
 
@@ -14,7 +16,8 @@ public class svm_predict {
 		return Integer.parseInt(s);
 	}
 
-	private static void predict(BufferedReader input, DataOutputStream output, svm_model model, int predict_probability) throws IOException
+    // modified return type
+	private static TestRes predict(BufferedReader input, DataOutputStream output, svm_model model, int predict_probability) throws IOException
 	{
 		int correct = 0;
 		int total = 0;
@@ -97,6 +100,7 @@ public class svm_predict {
 		else
 			System.out.print("Accuracy = "+(double)correct/total*100+
 				 "% ("+correct+"/"+total+") (classification)\n");
+        return new TestRes(correct, total);
 	}
 
 	private static void exit_with_help()
@@ -107,8 +111,10 @@ public class svm_predict {
 		System.exit(1);
 	}
 
-	public static void main(String argv[]) throws IOException
+    // modified return type
+	public static TestRes main(String argv[]) throws IOException
 	{
+        TestRes res = null;
 		int i, predict_probability=0;
 
 		// parse options
@@ -148,7 +154,7 @@ public class svm_predict {
 					System.out.print("Model supports probability estimates, but disabled in prediction.\n");
 				}
 			}
-			predict(input,output,model,predict_probability);
+			res = predict(input,output,model,predict_probability);
 			input.close();
 			output.close();
 		} 
@@ -160,5 +166,6 @@ public class svm_predict {
 		{
 			exit_with_help();
 		}
+        return res;
 	}
 }

@@ -1,5 +1,6 @@
 package hadoop.svm;
 
+import hadoop.tools.TestRes;
 import libsvm.svm_predict;
 import libsvm.svm_train;
 import org.apache.hadoop.conf.Configuration;
@@ -27,9 +28,10 @@ public class MRSVMTest {
     public static String output = "";
     public static String model = "";
 
-    public static class Map extends MapReduceBase implements Mapper<Object, Text, IntWritable, Text> {
-        public void map(Object key, Text value, OutputCollector<IntWritable, Text> output, Reporter reporter)
+    public static class Map extends MapReduceBase implements Mapper<Object, Text, IntWritable, IntWritable> {
+        public void map(Object key, Text value, OutputCollector<IntWritable, IntWritable> output, Reporter reporter)
                 throws IOException {
+
             Date date = new Date();
             long milsec = date.getTime();
             String tmpfile = new String("/tmp/t_"+milsec);
@@ -64,10 +66,10 @@ public class MRSVMTest {
             }
             
             as[2] = new String(as[0]+".output");
-
+            TestRes res = null;
             try {
                 // make the predict method return the correct and total ------------
-                svm_predict.main(as);
+                res = svm_predict.main(as);
             } catch (IOException e) {
                 throw new IOException("Testing error occured.");
             }
@@ -92,17 +94,21 @@ public class MRSVMTest {
                 IOUtils.closeStream(out);
                 in.close();
             }
-            output.collect(new IntWritable(1), new Text(dst));
+            output.collect(new IntWritable(1), new IntWritable(res.getPre()));
+            output.collect(new IntWritable(2), new IntWritable(res.getTot()));
         }
     }
 
-    public static class Reduce extends MapReduceBase implements Reducer<IntWritable, Text, Text, Text> {
+    public static class Reduce extends MapReduceBase implements Reducer<IntWritable, IntWritable, Text, Text> {
         @Override
-        public void reduce(IntWritable key, Iterator<Text> values,
+        public void reduce(IntWritable key, Iterator<IntWritable> values,
                            OutputCollector<Text, Text> output, Reporter reporter)
                 throws IOException {
+            int i = 0;
             while(values.hasNext()) {
-                output.collect(values.next(), new Text(""));
+                //output.collect(values.next(), new Text(""));
+                i += values.next().get();
+                output.collect(new Text(key.toString()), new Text(new IntWritable(i).toString()));
             }
         }
     }
