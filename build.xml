@@ -8,6 +8,7 @@
     <path id="project.classpath">
         <fileset dir="${dist}">
             <include name="*.jar" />
+            <include name="hadoop-lib/*.jar" />
         </fileset>
     </path>
 
