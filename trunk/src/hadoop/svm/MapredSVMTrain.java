@@ -104,7 +104,7 @@ public class MapredSVMTrain {
         }
 
         Job job = new Job(conf, "MapredSVMTrain");
-        job.setJarByClass(MapredTest.class);
+        job.setJarByClass(MapredSVMTrain.class);
         job.setMapperClass(Map.class);
         job.setReducerClass(Reduce.class);
         job.setOutputKeyClass(IntWritable.class);
