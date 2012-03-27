@@ -44,6 +44,7 @@ public class Main {
     }
     
     public static void main(String[] args) {
+        System.out.println(args.toString());
         if(args.length != 4) {
             System.out.println("argments number error. please input 4 argments");
             System.out.println("+\'a\' String int for trainSplit()");
