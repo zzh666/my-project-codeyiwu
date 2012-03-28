@@ -11,6 +11,7 @@ import org.apache.hadoop.mapred.TextInputFormat;
  * Time: 下午4:06
  * To change this template use File | Settings | File Templates.
  */
+@Deprecated
 public class NonSplittableTextInputFormat extends TextInputFormat {
     @Override
     protected boolean isSplitable(FileSystem fs, Path file) {

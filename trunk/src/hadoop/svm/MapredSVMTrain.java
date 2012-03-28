@@ -8,6 +8,7 @@ import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapred.FileSplit;
+import org.apache.hadoop.mapred.TextOutputFormat;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
@@ -27,6 +28,7 @@ import java.util.Date;
  * Time: 下午9:00
  * To change this template use File | Settings | File Templates.
  */
+@Deprecated
 public class MapredSVMTrain {
     public static class Map extends Mapper<Object, Text, IntWritable, Text> {
         public void map(Object key, Text value, Context context) throws IOException,
@@ -98,8 +100,8 @@ public class MapredSVMTrain {
 
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration();
-        String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
-        if(otherArgs.length != 2) {
+        //String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
+        if(args.length != 2) {
             System.err.println("Uncompletely args.");
             System.exit(2);
         }
@@ -111,11 +113,11 @@ public class MapredSVMTrain {
         job.setOutputKeyClass(IntWritable.class);
         job.setOutputValueClass(Text.class);
 
-        conf.set("input",  otherArgs[0]);
-        conf.set("output", otherArgs[1]);
+        //conf.set("input",  otherArgs[0]);
+        //conf.set("output", otherArgs[1]);
 
-        FileInputFormat.addInputPath(job, new Path(otherArgs[0]));
-        FileOutputFormat.setOutputPath(job, new Path(otherArgs[1]));
+        FileInputFormat.addInputPath(job, new Path(args[0]));
+        FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
         System.exit(job.waitForCompletion(true) ? 0 : 1);
     }

@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" readonly="true" id="0e0089ee-9338-4927-9375-06d4fe530890" name="Default" comment="hadoop standard lib">
+    <list default="true" readonly="true" id="0e0089ee-9338-4927-9375-06d4fe530890" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/hadoop/svm/ConfigAccessor.java" />
+      <change type="DELETED" beforePath="C:\Users\yiwu\my-googlecode\my-project-codeyiwu\.idea\libraries\libsvm_3_11.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/hadoop_svm.jar" afterPath="$PROJECT_DIR$/lib/hadoop_svm.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/hadop_1_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/hadop_1_0_1.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/my-project-codeyiwu.iml" afterPath="$PROJECT_DIR$/my-project-codeyiwu.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/hadoop/svm/MRSVMTest.java" afterPath="$PROJECT_DIR$/src/hadoop/svm/MRSVMTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/hadoop/svm/MRSVMTrain.java" afterPath="$PROJECT_DIR$/src/hadoop/svm/MRSVMTrain.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/hadoop/svm/MapredSVMTest.java" afterPath="$PROJECT_DIR$/src/hadoop/svm/MapredSVMTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/hadoop/svm/MapredSVMTrain.java" afterPath="$PROJECT_DIR$/src/hadoop/svm/MapredSVMTrain.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/hadoop/svm/WholeFileInputFormat.java" afterPath="$PROJECT_DIR$/src/hadoop/svm/WholeFileInputFormat.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/hadoop/svm/NonSplittableTextInputFormat.java" afterPath="$PROJECT_DIR$/src/hadoop/svm/NonSplittableTextInputFormat.java" />
     </list>
     <ignored path="my-project-codeyiwu.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -75,10 +80,28 @@
           <file leaf-file-name="MRSVMTrain.java" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/hadoop/svm/MRSVMTrain.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="145" column="48" selection-start="5285" selection-end="5305" vertical-scroll-proportion="0.0">
+                <state line="158" column="60" selection-start="5874" selection-end="5874" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ConfigAccessor.java" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/hadoop/svm/ConfigAccessor.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="78" column="27" selection-start="2422" selection-end="2422" vertical-scroll-proportion="0.0">
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="config.property" pinned="false" current="true" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/config.property">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -86,7 +109,7 @@
           <file leaf-file-name="MapredSVMTrain.java" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/hadoop/svm/MapredSVMTrain.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="121" column="1" selection-start="4392" selection-end="4392" vertical-scroll-proportion="0.0">
+                <state line="123" column="32" selection-start="4445" selection-end="4445" vertical-scroll-proportion="0.0">
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -94,10 +117,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/build.xml">
+          <file leaf-file-name="TextOutputFormat.java" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://D:/My Code/hadoop-1.0.1/src/mapred/org/apache/hadoop/mapred/TextOutputFormat.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="53" column="11" selection-start="1591" selection-end="1591" vertical-scroll-proportion="0.0">
+                <state line="36" column="13" selection-start="1362" selection-end="1362" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
@@ -107,18 +130,6 @@
             <entry file="file://$PROJECT_DIR$/src/hadoop/svm/MapredTest.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state line="53" column="37" selection-start="2001" selection-end="2001" vertical-scroll-proportion="0.0">
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                    <element signature="e#798#830#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="MRSVMTest.java" pinned="false" current="true" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/hadoop/svm/MRSVMTest.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="81" column="30" selection-start="2988" selection-end="2988" vertical-scroll-proportion="0.64772725">
                   <folding />
                 </state>
               </provider>
@@ -127,10 +138,8 @@
           <file leaf-file-name="WholeFileInputFormat.java" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/hadoop/svm/WholeFileInputFormat.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="30" column="32" selection-start="972" selection-end="972" vertical-scroll-proportion="0.0">
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
+                <state line="22" column="57" selection-start="657" selection-end="672" vertical-scroll-proportion="0.0">
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -138,19 +147,8 @@
           <file leaf-file-name="NonSplittableTextInputFormat.java" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/hadoop/svm/NonSplittableTextInputFormat.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="13" column="59" selection-start="353" selection-end="353" vertical-scroll-proportion="0.0">
+                <state line="13" column="11" selection-start="305" selection-end="305" vertical-scroll-proportion="0.0">
                   <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="WholeFileRecordReader.java" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/hadoop/svm/WholeFileRecordReader.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="28" column="29" selection-start="897" selection-end="897" vertical-scroll-proportion="0.0">
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
                 </state>
               </provider>
             </entry>
@@ -177,22 +175,22 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="MapredSVMTrain.java" pinned="false" current="false" current-in-tab="true">
+          <file leaf-file-name="MapredSVMTrain.java" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/hadoop/svm/MapredSVMTrain.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="8" column="46" selection-start="234" selection-end="277" vertical-scroll-proportion="-4.562005">
-                  <folding />
+                <state line="22" column="0" selection-start="740" selection-end="740" vertical-scroll-proportion="0.0">
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="MapredSVMTest.java" pinned="false" current="false" current-in-tab="false">
+          <file leaf-file-name="MapredSVMTest.java" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/hadoop/svm/MapredSVMTest.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="137" column="42" selection-start="5198" selection-end="5198" vertical-scroll-proportion="0.0">
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
+                <state line="33" column="8" selection-start="1005" selection-end="1005" vertical-scroll-proportion="-3.074689">
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -214,22 +212,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/build.xml" />
         <option value="$PROJECT_DIR$/files/conf/core-site.xml" />
         <option value="$PROJECT_DIR$/test.xml" />
         <option value="$PROJECT_DIR$/src/hadoop/tools/Main.java" />
         <option value="$PROJECT_DIR$/src/libsvm/svm_train.java" />
         <option value="$PROJECT_DIR$/src/hadoop/tools/TestRes.java" />
         <option value="$PROJECT_DIR$/src/libsvm/svm_predict.java" />
-        <option value="$PROJECT_DIR$/src/hadoop/svm/NonSplittableTextInputFormat.java" />
         <option value="$PROJECT_DIR$/src/hadoop/svm/WholeFileRecordReader.java" />
-        <option value="$PROJECT_DIR$/src/hadoop/svm/MRSVMTrain.java" />
         <option value="$PROJECT_DIR$/src/hadoop/svm/MapredTest.java" />
         <option value="$PROJECT_DIR$/build.xml" />
-        <option value="$PROJECT_DIR$/src/hadoop/svm/MapredSVMTest.java" />
-        <option value="$PROJECT_DIR$/src/hadoop/svm/MapredSVMTrain.java" />
         <option value="$PROJECT_DIR$/src/hadoop/svm/WholeFileInputFormat.java" />
+        <option value="$PROJECT_DIR$/src/hadoop/svm/MapredSVMTest.java" />
+        <option value="$PROJECT_DIR$/src/hadoop/svm/NonSplittableTextInputFormat.java" />
         <option value="$PROJECT_DIR$/src/hadoop/svm/MRSVMTest.java" />
+        <option value="$PROJECT_DIR$/src/hadoop/svm/MapredSVMTrain.java" />
+        <option value="$PROJECT_DIR$/src/hadoop/svm/MRSVMTrain.java" />
+        <option value="$PROJECT_DIR$/src/hadoop/svm/ConfigAccessor.java" />
       </list>
     </option>
   </component>
@@ -268,7 +266,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -346,8 +343,23 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="my-project-codeyiwu" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="my-project-codeyiwu" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -367,7 +379,7 @@
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="dynamic.classpath" value="false" />
   </component>
-  <component name="RunManager" selected="Application.Test">
+  <component name="RunManager" selected="Application.ConfigAccessor">
     <configuration default="false" name="Test" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="hadoop.tools.Test" />
       <option name="VM_PARAMETERS" value="" />
@@ -394,6 +406,28 @@
       <option name="MAIN_CLASS_NAME" value="hadoop.tools.Main" />
       <option name="VM_PARAMETERS" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="my-project-codeyiwu" />
+      <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="ConfigAccessor" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="hadoop.svm.ConfigAccessor" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="a ../exp/a1a1 3" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
@@ -666,9 +700,10 @@
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Application.Test" />
       <item index="1" class="java.lang.String" itemvalue="Application.Main" />
+      <item index="2" class="java.lang.String" itemvalue="Application.ConfigAccessor" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -731,22 +766,22 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852563" sideWeight="0.4939759" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852563" sideWeight="0.49718875" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.07951807" sideWeight="0.6730769" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26923078" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32692307" sideWeight="0.5550201" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.07951807" sideWeight="0.838141" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26923078" sideWeight="0.49718875" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16185898" sideWeight="0.5052209" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25461847" sideWeight="0.66346157" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852563" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32692307" sideWeight="0.43935743" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16185898" sideWeight="0.48915663" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32931727" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.7227564" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20240964" sideWeight="0.6730769" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20240964" sideWeight="0.838141" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32692307" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Properties" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852563" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852563" sideWeight="0.49718875" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852563" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852563" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -787,7 +822,7 @@
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
     <option name="CREATE_PATCH_EXPAND_DETAILS_DEFAULT" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="hadoop standard lib" />
+    <option name="LAST_COMMIT_MESSAGE" value="distributed global variables" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -816,6 +851,7 @@
     <MESSAGE value="new Mapred Svm" />
     <MESSAGE value="release hadoop svm 2.0" />
     <MESSAGE value="hadoop standard lib" />
+    <MESSAGE value="distributed global variables" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -843,24 +879,24 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://D:/My Code/hadoop-1.0.1/src/mapred/org/apache/hadoop/mapreduce/lib/input/TextInputFormat.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.46341464" />
-      </provider>
-    </entry>
-    <entry file="file://D:/My Code/hadoop-1.0.1/src/mapred/org/apache/hadoop/mapred/TextInputFormat.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="31" selection-start="1627" selection-end="1627" vertical-scroll-proportion="0.9268293" />
-      </provider>
-    </entry>
-    <entry file="file://D:/My Code/hadoop-1.0.1/src/mapred/org/apache/hadoop/mapreduce/lib/input/FileInputFormat.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="125" column="69" selection-start="4478" selection-end="4478" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/libsvm/svm_predict.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="156" column="18" selection-start="4213" selection-end="4213" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://D:/My Code/hadoop-1.0.1/src/core/org/apache/hadoop/util/GenericOptionsParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="41" selection-start="1228" selection-end="1228" vertical-scroll-proportion="0.30898875" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="53" column="11" selection-start="1591" selection-end="1591" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/hadoop/svm/WholeFileRecordReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="29" selection-start="897" selection-end="897" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/hadoop/tools/TestRes.java">
@@ -873,67 +909,51 @@
         <state line="35" column="52" selection-start="1171" selection-end="1171" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://D:/My Code/hadoop-1.0.1/src/core/org/apache/hadoop/util/GenericOptionsParser.java">
+    <entry file="file://D:/My Code/hadoop-1.0.1/src/mapred/org/apache/hadoop/mapred/TextOutputFormat.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="41" selection-start="1228" selection-end="1228" vertical-scroll-proportion="0.30898875">
+        <state line="36" column="13" selection-start="1362" selection-end="1362" vertical-scroll-proportion="0.0">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/hadoop/svm/MapredSVMTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="137" column="42" selection-start="5198" selection-end="5198" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/hadoop/svm/MapredSVMTrain.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="121" column="1" selection-start="4392" selection-end="4392" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="11" selection-start="1591" selection-end="1591" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/hadoop/svm/MapredTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="37" selection-start="2001" selection-end="2001" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#798#830#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/hadoop/svm/WholeFileInputFormat.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="32" selection-start="972" selection-end="972" vertical-scroll-proportion="0.0">
+        <state line="22" column="57" selection-start="657" selection-end="672" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/hadoop/svm/NonSplittableTextInputFormat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="11" selection-start="305" selection-end="305" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/hadoop/svm/MRSVMTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="141" column="32" selection-start="5285" selection-end="5285" vertical-scroll-proportion="0.33203125">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/hadoop/svm/NonSplittableTextInputFormat.java">
+    <entry file="file://$PROJECT_DIR$/src/hadoop/svm/MapredTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="59" selection-start="353" selection-end="353" vertical-scroll-proportion="0.0">
+        <state line="53" column="37" selection-start="2001" selection-end="2001" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/hadoop/svm/MapredSVMTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="8" selection-start="1005" selection-end="1005" vertical-scroll-proportion="-3.074689">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/hadoop/svm/WholeFileRecordReader.java">
+    <entry file="file://$PROJECT_DIR$/src/hadoop/svm/MapredSVMTrain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="29" selection-start="897" selection-end="897" vertical-scroll-proportion="0.0">
+        <state line="123" column="32" selection-start="4445" selection-end="4445" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -942,16 +962,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/hadoop/svm/MRSVMTrain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="145" column="48" selection-start="5285" selection-end="5305" vertical-scroll-proportion="0.0">
+        <state line="158" column="60" selection-start="5874" selection-end="5874" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/hadoop/svm/ConfigAccessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="78" column="27" selection-start="2422" selection-end="2422" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/hadoop/svm/MRSVMTest.java">
+    <entry file="file://$PROJECT_DIR$/config.property">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="81" column="30" selection-start="2988" selection-end="2988" vertical-scroll-proportion="0.64772725">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1033,7 +1060,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>libsvm-3.11</last-edited>
+          <last-edited>hadop-1.0.1</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

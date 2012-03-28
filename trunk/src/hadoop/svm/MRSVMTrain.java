@@ -4,6 +4,7 @@ import libsvm.svm_train;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
+import org.apache.hadoop.filecache.DistributedCache;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.IntWritable;
@@ -70,8 +71,8 @@ public class MRSVMTrain {
             // upload model file to hdfs in mapping step
             Configuration conf = new Configuration();
             // get input & output from conf
-            String inputp = conf.get("input");
-            String outputp = conf.get("output");
+            String inputp = conf.get("inputpath");
+            String outputp = conf.get("outputpath");
             InputStream in = null;
             OutputStream out = null;
             FileSystem fs;
@@ -139,27 +140,36 @@ public class MRSVMTrain {
 //        FileOutputFormat.setOutputPath(conf, new Path(args[1]));
 //
 //        JobClient.runJob(conf);
+        Configuration conf = new Configuration();
+        JobConf jobconf = new JobConf(conf, MRSVMTrain.class);
+        jobconf.setJobName("MapReduceSVMTrainJob");
 
-        JobConf conf = new JobConf(MRSVMTrain.class);
-        conf.setJobName("MapReduceSVMTrainJob");
+        jobconf.setInputFormat(WholeFileInputFormat.class);
+        jobconf.setOutputFormat(TextOutputFormat.class);
 
-        conf.setInputFormat(WholeFileInputFormat.class);
-        conf.setOutputFormat(TextOutputFormat.class);
+        jobconf.setMapperClass(Map.class);
+        jobconf.setReducerClass(Reduce.class);
+        jobconf.setOutputKeyClass(Text.class);
+        jobconf.setOutputValueClass(Text.class);
 
-        conf.setMapperClass(Map.class);
-        conf.setReducerClass(Reduce.class);
-        conf.setOutputKeyClass(Text.class);
-        conf.setOutputValueClass(Text.class);
+        conf.set("inputpath", args[0]);
+        conf.set("outputpath", args[1]);
 
-        conf.setMapOutputKeyClass(IntWritable.class);
-        conf.setMapOutputValueClass(Text.class);
+        jobconf.setMapOutputKeyClass(IntWritable.class);
+        jobconf.setMapOutputValueClass(Text.class);
 
-        conf.set("input", args[0]);
-        conf.set("output", args[1]);
 
-        FileInputFormat.addInputPath(conf, new Path(args[0]));
-        FileOutputFormat.setOutputPath(conf, new Path(args[1]));
 
-        JobClient.runJob(conf);
+        //jobconf.set("input", args[0]);
+        //jobconf.set("output", args[1]);
+
+        // distributed cache
+        //DistributedCache.addCacheFile(new URI("./data.data"), jobconf);
+
+
+        FileInputFormat.addInputPath(jobconf, new Path(args[0]));
+        FileOutputFormat.setOutputPath(jobconf, new Path(args[1]));
+
+        JobClient.runJob(jobconf);
     }
 }

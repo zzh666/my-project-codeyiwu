@@ -27,6 +27,7 @@ import java.util.Date;
  * Time: 下午9:09
  * To change this template use File | Settings | File Templates.
  */
+@Deprecated
 public class MapredSVMTest {
 
     public static class Map extends Mapper<Object, Text, IntWritable, IntWritable> {
