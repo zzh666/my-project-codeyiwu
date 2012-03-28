@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="hadop-1.0.1">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/hadoop-core-1.0.1.jar!/" />
+      <root url="file://$PROJECT_DIR$/lib" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
@@ -37,5 +37,6 @@
       <root url="file://D:/My Code/hadoop-1.0.1/src/test" />
       <root url="file://D:/My Code/hadoop-1.0.1/src/tools" />
     </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/lib" recursive="false" />
   </library>
 </component>

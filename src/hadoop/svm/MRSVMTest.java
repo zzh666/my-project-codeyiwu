@@ -62,7 +62,7 @@ public class MRSVMTest {
                 IOUtils.closeStream(in);
                 if(out != null) out.close();
             }
-            
+
             as[2] = new String(as[0]+".output");
             TestRes res = null;
             try {
@@ -118,27 +118,27 @@ public class MRSVMTest {
             return;
         }
 
-        JobConf conf = new JobConf(hadoop.svm.MRSVMTest.class);
-        conf.setJobName("MapReduceSVMTestJob");
+        JobConf jobconf = new JobConf(hadoop.svm.MRSVMTest.class);
+        jobconf.setJobName("MapReduceSVMTestJob");
 
-        conf.setInputFormat(WholeFileInputFormat.class);
-        conf.setOutputFormat(TextOutputFormat.class);
+        jobconf.setInputFormat(WholeFileInputFormat.class);
+        jobconf.setOutputFormat(TextOutputFormat.class);
 
-        conf.setMapperClass(Map.class);
-        conf.setReducerClass(Reduce.class);
-        conf.setOutputKeyClass(Text.class);
-        conf.setOutputValueClass(Text.class);
+        jobconf.setMapperClass(Map.class);
+        jobconf.setReducerClass(Reduce.class);
+        jobconf.setOutputKeyClass(Text.class);
+        jobconf.setOutputValueClass(Text.class);
 
-        conf.setMapOutputKeyClass(IntWritable.class);
-        conf.setMapOutputValueClass(Text.class);
+        jobconf.setMapOutputKeyClass(IntWritable.class);
+        jobconf.setMapOutputValueClass(Text.class);
 
-        FileInputFormat.addInputPath(conf, new Path(args[0]));
-        FileOutputFormat.setOutputPath(conf, new Path(args[1]));
+        FileInputFormat.addInputPath(jobconf, new Path(args[0]));
+        FileOutputFormat.setOutputPath(jobconf, new Path(args[1]));
 
-        conf.set("input", args[0]);
-        conf.set("output", args[1]);
-        conf.set("model", args[2]);
+        jobconf.set("input", args[0]);
+        jobconf.set("output", args[1]);
+        jobconf.set("model", args[2]);
 
-        JobClient.runJob(conf);
+        JobClient.runJob(jobconf);
     }
 }
