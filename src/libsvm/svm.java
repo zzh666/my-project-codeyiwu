@@ -1938,7 +1938,7 @@ public class svm {
 			}
 
 			decision_function f = svm_train_one(prob,param,0,0);
-			model.rho = new double[1];
+            model.rho = new double[1];
 			model.rho[0] = f.rho;
 
 			int nSV = 0;
@@ -1967,6 +1967,12 @@ public class svm {
 			int[][] tmp_count = new int[1][];			
 			int[] perm = new int[l];
 
+            //assign y[] to labels[] - yiwu
+            //int[] labels =  new int[l];
+            //for(int i=0;i<l;i++)
+                //labels[i] = (int)prob.y[i];
+            //svm.info("assign y[] to label[].");
+            
 			// group training data of the same class
 			svm_group_classes(prob,tmp_nr_class,tmp_label,tmp_start,tmp_count,perm);
 			int nr_class = tmp_nr_class[0];			
@@ -1979,9 +1985,11 @@ public class svm {
 			
 			svm_node[][] x = new svm_node[l][];
 			int i;
-			for(i=0;i<l;i++)
+            // assign y to ll property yiwu
+			for(i=0;i<l;i++) {
 				x[i] = prob.x[perm[i]];
-
+                //x[i][0].ll = (int)prob.y[i];
+            }
 			// calculate weighted C
 
 			double[] weighted_C = new double[nr_class];
@@ -2101,9 +2109,14 @@ public class svm {
 
 			model.l = nnz;
 			model.SV = new svm_node[nnz][];
+            //model.y = new int[nnz];
 			p = 0;
 			for(i=0;i<l;i++)
-				if(nonzero[i]) model.SV[p++] = x[i];
+				if(nonzero[i]) {
+                    // yiwu
+                    //model.y[p] = labels[i];
+                    model.SV[p++] = x[i];
+                }
 
 			int[] nz_start = new int[nr_class];
 			nz_start[0] = 0;
@@ -2496,6 +2509,94 @@ public class svm {
 
 		fp.close();
 	}
+
+    // add method save SVs as sample file
+    public static void svm_save_samples(String model_file_name, svm_model model) throws IOException
+    {
+        DataOutputStream fp = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(model_file_name)));
+
+        svm_parameter param = model.param;
+
+        //fp.writeBytes("svm_type "+svm_type_table[param.svm_type]+"\n");
+        //fp.writeBytes("kernel_type "+kernel_type_table[param.kernel_type]+"\n");
+
+        //if(param.kernel_type == svm_parameter.POLY)
+            //fp.writeBytes("degree "+param.degree+"\n");
+
+        //if(param.kernel_type == svm_parameter.POLY ||
+                //param.kernel_type == svm_parameter.RBF ||
+                //param.kernel_type == svm_parameter.SIGMOID)
+            //fp.writeBytes("gamma "+param.gamma+"\n");
+
+        //if(param.kernel_type == svm_parameter.POLY ||
+                //param.kernel_type == svm_parameter.SIGMOID)
+            //fp.writeBytes("coef0 "+param.coef0+"\n");
+
+        int nr_class = model.nr_class;
+        int l = model.l;
+        //fp.writeBytes("nr_class "+nr_class+"\n");
+        //fp.writeBytes("total_sv "+l+"\n");
+
+        //{
+            //fp.writeBytes("rho");
+            //for(int i=0;i<nr_class*(nr_class-1)/2;i++)
+                //fp.writeBytes(" "+model.rho[i]);
+            //fp.writeBytes("\n");
+        //}
+
+        //if(model.label != null)
+        //{
+            //fp.writeBytes("label");
+            //for(int i=0;i<nr_class;i++)
+                //fp.writeBytes(" "+model.label[i]);
+            //fp.writeBytes("\n");
+        //}
+
+        //if(model.probA != null) // regression has probA only
+        //{
+            //fp.writeBytes("probA");
+            //for(int i=0;i<nr_class*(nr_class-1)/2;i++)
+                //fp.writeBytes(" "+model.probA[i]);
+            //fp.writeBytes("\n");
+        //}
+        //if(model.probB != null)
+        //{
+            //fp.writeBytes("probB");
+            //for(int i=0;i<nr_class*(nr_class-1)/2;i++)
+                //fp.writeBytes(" "+model.probB[i]);
+            //fp.writeBytes("\n");
+        //}
+
+        //if(model.nSV != null)
+        //{
+            //fp.writeBytes("nr_sv");
+            //for(int i=0;i<nr_class;i++)
+                //fp.writeBytes(" "+model.nSV[i]);
+            //fp.writeBytes("\n");
+        //}
+
+        //fp.writeBytes("SV\n");
+        double[][] sv_coef = model.sv_coef;
+        svm_node[][] SV = model.SV;
+        //int[] ls = model.y;
+
+        for(int i=0;i<l;i++)
+        {
+            //for(int j=0;j<nr_class-1;j++)
+                //fp.writeBytes(sv_coef[j][i]+" ");
+
+            svm_node[] p = SV[i];
+            fp.writeBytes(p[0].ll+" ");
+            if(param.kernel_type == svm_parameter.PRECOMPUTED) {
+                fp.writeBytes("0:"+(int)(p[0].value));
+            }
+            else
+                for(int j=0;j<p.length;j++)
+                    fp.writeBytes(p[j].index+":"+p[j].value+" ");
+            fp.writeBytes("\n");
+        }
+        fp.close();
+    }
 
 	private static double atof(String s)
 	{
