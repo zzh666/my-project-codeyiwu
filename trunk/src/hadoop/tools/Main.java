@@ -13,7 +13,7 @@ public class Main {
 
     // file format for example: D:/test/train
     public static void trainSplit(String file, int split) {
-        Splitter splitter = SplitnMergeFactory.createSplitter(split, file, SplitnMergeFactory.SplitType.RANDOM);
+        Splitter splitter = SplitnMergeFactory.createSplitter(split, file, SplitnMergeFactory.SplitType.SEQUENCE);
         try{
             splitter.split();
         } catch (IOException e) {
