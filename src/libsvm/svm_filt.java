@@ -19,6 +19,9 @@ public class svm_filt {
     private String error_msg;
     private int cross_validation;
     private int nr_fold;
+    
+    // filted sample file
+    private String sample_file_name;
 
     private static svm_print_interface svm_print_null = new svm_print_interface()
     {
@@ -116,10 +119,10 @@ public class svm_filt {
         else
         {
             model = svm.svm_train(prob,param);
-            //svm.svm_save_model(model_file_name,model);
+            svm.svm_save_model(model_file_name,model);
 
             // filter out the nSV samples
-            svm.svm_save_samples(model_file_name,model);
+            svm.svm_save_samples(sample_file_name,model);
         }
     }
 
@@ -266,6 +269,7 @@ public class svm_filt {
             ++p;	// whew...
             model_file_name = argv[i].substring(p)+".model";
         }
+        sample_file_name = model_file_name+"_spl";
     }
 
     // read in a problem (in svmlight format)

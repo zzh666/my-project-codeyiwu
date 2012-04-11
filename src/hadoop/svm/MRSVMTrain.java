@@ -152,8 +152,8 @@ public class MRSVMTrain {
         jobconf.setOutputKeyClass(Text.class);
         jobconf.setOutputValueClass(Text.class);
 
-        conf.set("inputpath", args[0]);
-        conf.set("outputpath", args[1]);
+        //conf.set("inputpath", args[0]);
+        //conf.set("outputpath", args[1]);
 
         jobconf.setMapOutputKeyClass(IntWritable.class);
         jobconf.setMapOutputValueClass(Text.class);
@@ -162,10 +162,6 @@ public class MRSVMTrain {
 
         //jobconf.set("input", args[0]);
         //jobconf.set("output", args[1]);
-
-        // distributed cache
-        //DistributedCache.addCacheFile(new URI("./data.data"), jobconf);
-
 
         FileInputFormat.addInputPath(jobconf, new Path(args[0]));
         FileOutputFormat.setOutputPath(jobconf, new Path(args[1]));
