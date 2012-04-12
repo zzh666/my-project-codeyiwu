@@ -51,7 +51,7 @@ public class MRSVMTrainnFilt {
         
         Path[] path = new Path[1];
 
-        FileInputFormat.addInputPath(job, new Path(args[1]));
+        //FileInputFormat.addInputPath(job, new Path(args[1]));
 
         path[0] = new Path(args[1]);
         FileInputFormat.setInputPaths(job, path);
