@@ -35,7 +35,7 @@ public class SvmMerger extends Merger{
         String st="", kt="", l1="", l2="", tmp="";
         double gm, rho;
         int nrc, tsv;
-        Map<String, Integer> ns = new HashMap<String, Integer>();
+        Map<Integer, Integer> ns = new HashMap<Integer, Integer>();
         // initialization
         gm = 0; rho = 0; nrc=0; tsv = 0;
         BufferedReader br;
@@ -64,13 +64,15 @@ public class SvmMerger extends Merger{
                 l2 = getWord(line, 2);
                 line = br.readLine();       //nr_sv
                 tmp = getWord(line, 1);
+                int ll1 = Integer.valueOf(l1);
+                int ll2 = Integer.valueOf(l2);
                 if(!ns.containsKey(l1))
-                    ns.put(l1, 0);
-                ns.put(l1, ns.get(l1) + Integer.valueOf(tmp));
+                    ns.put(ll1, 0);
+                ns.put(ll1, ns.get(ll1) + Integer.valueOf(tmp));
                 tmp = getWord(line, 2);
-                if(!ns.containsKey(l2))
-                    ns.put(l2, 0);
-                ns.put(l2, ns.get(l2) + Integer.valueOf(tmp));
+                if(!ns.containsKey(ll2))
+                    ns.put(ll2, 0);
+                ns.put(ll2, ns.get(ll2) + Integer.valueOf(tmp));
                 br.readLine();              //SV
             }
 
@@ -122,14 +124,14 @@ public class SvmMerger extends Merger{
             bw.write("rho "+String.valueOf(rho/brs.size()));
             bw.newLine();
             String print = "";
-            Iterator<Map.Entry<String, Integer>> it = ns.entrySet().iterator();
+            Iterator<Map.Entry<Integer, Integer>> it = ns.entrySet().iterator();
             int[] kar = new int[ns.size()];
             int idx=0;
             while(it.hasNext()) {
                 Map.Entry entry = it.next();
                 //print += entry.getKey();
                 //print += " ";
-                kar[idx++] = Integer.getInteger(entry.getKey().toString());
+                kar[idx++] = Integer.valueOf(entry.getKey().toString());
             }
             if(idx == 2) {
                 if(kar[0] > kar[1]) {
@@ -145,7 +147,7 @@ public class SvmMerger extends Merger{
             print = "";
             //it = ns.entrySet().iterator();
             for(int k=0;k<idx;k++) {
-                print += ns.get(String.valueOf(kar[0])) + " ";
+                print += ns.get((kar[0])).toString() + " ";
             }
             bw.write("nr_sv "+print);
             bw.newLine();
