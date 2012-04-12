@@ -147,7 +147,7 @@ public class SvmMerger extends Merger{
             print = "";
             //it = ns.entrySet().iterator();
             for(int k=0;k<idx;k++) {
-                print += ns.get((kar[0])).toString() + " ";
+                print += ns.get((kar[k])).toString() + " ";
             }
             bw.write("nr_sv "+print);
             bw.newLine();
