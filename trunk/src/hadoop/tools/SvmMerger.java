@@ -66,14 +66,24 @@ public class SvmMerger extends Merger{
                 tmp = getWord(line, 1);
                 int ll1 = Integer.valueOf(l1);
                 int ll2 = Integer.valueOf(l2);
-                if(!ns.containsKey(l1))
-                    ns.put(ll1, 0);
-                ns.put(ll1, ns.get(ll1) + Integer.valueOf(tmp));
+                int xy = 0;
+                if(ns.containsKey(ll1)) {
+                    xy = ns.get(ll1) + Integer.valueOf(tmp);
+                    ns.remove(ll1);
+                }
+                else
+                    xy = Integer.valueOf(tmp);
+                ns.put(ll1, xy);
                 tmp = getWord(line, 2);
-                if(!ns.containsKey(ll2))
-                    ns.put(ll2, 0);
-                ns.put(ll2, ns.get(ll2) + Integer.valueOf(tmp));
+                if(ns.containsKey(ll2)){
+                    xy = ns.get(ll2) + Integer.valueOf(tmp);
+                    ns.remove(ll2);
+                }
+                else
+                    xy = Integer.valueOf(tmp);
+                ns.put(ll2, xy);
                 br.readLine();              //SV
+
             }
 
         } catch (IOException e) {
@@ -132,6 +142,7 @@ public class SvmMerger extends Merger{
                 //print += entry.getKey();
                 //print += " ";
                 kar[idx++] = Integer.valueOf(entry.getKey().toString());
+                //System.out.println(kar[idx-1]);
             }
             if(idx == 2) {
                 if(kar[0] > kar[1]) {
