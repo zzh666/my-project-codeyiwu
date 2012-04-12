@@ -2,6 +2,7 @@ package hadoop.svm;
 
 import libsvm.svm_filt;
 
+import libsvm.svm_train;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IOUtils;
@@ -37,7 +38,7 @@ public class MRSVMTrainnFilt {
         job.setOutputFormat(TextOutputFormat.class);
         
         job.setMapperClass(FiltMap.class);
-        job.setReducerClass(Reduce.class);
+        job.setReducerClass(TrainReduce.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(Text.class);
         
@@ -60,6 +61,7 @@ public class MRSVMTrainnFilt {
     }
     public static class FiltMap extends MapReduceBase 
             implements Mapper<Object, Text, IntWritable, Text> {
+
         public String inputpath;
         public String outputpath;
         
@@ -71,7 +73,7 @@ public class MRSVMTrainnFilt {
         public void map(Object key, Text value, OutputCollector<IntWritable, Text> output, Reporter reporter)
             throws IOException {
 
-            // write inputstream to localfile at /tmp/ directory
+            // write value inputstream to localfile at /tmp/ directory
             Date date = new Date();
             long milsec = date.getTime();
             String tmpfile = new String("/tmp/t_"+milsec);
@@ -95,12 +97,73 @@ public class MRSVMTrainnFilt {
             } catch (IOException e) {
                 throw new IOException("filting error occured.");
             }
+
+            BufferedReader br = null;
+            String line = null;
+            int k=0;
+            try {
+                br = new BufferedReader(new FileReader(spl));
+                while((line=br.readLine()) != null) {
+                    output.collect(new IntWritable(k++%2), new Text(line));
+                }
+            } catch (IOException e) {
+                throw new IOException("write local file error.");
+            } finally {
+                br.close();
+            }
+        }
+    }
+
+    public static class TrainReduce extends MapReduceBase
+            implements Reducer<IntWritable, Text, Text, Text> {
+        public String inputpath;
+        public String outputpath;
+
+        public void configure(JobConf job) {
+            inputpath = job.get("inputpath");
+            outputpath = job.get("outputpath");
+        }
+        @Override
+        public void reduce(IntWritable key, Iterator<Text> values,
+                           OutputCollector<Text, Text> output, Reporter reporter)
+                throws IOException {
+
+            // write value to localfile at /tmp/ directory
+            Date date = new Date();
+            long milsec = date.getTime();
+            String tmpfile = new String("/tmp/t_"+milsec);
+            BufferedWriter bw = null;
+            try {
+                bw = new BufferedWriter(new FileWriter(tmpfile));
+                while(values.hasNext()) {
+                    bw.write(values.next().toString()+"\n");
+                }
+            } catch (IOException e) {
+                throw new IOException("write local file error.");
+            } finally {
+                bw.close();
+            }
+
+            String[] as = new String[2];
+            as[0] = tmpfile;
+            as[1] =tmpfile+".model";
+            try {
+                svm_train.main(as);
+            } catch (IOException e) {
+                throw new IOException("train last svm error.");
+            }
+
+            // upload model file to hdfs in mapping step
             Configuration conf = new Configuration();
             InputStream in = null;
             OutputStream out = null;
             FileSystem fs;
             String src = as[1];
-            String dst = outputpath+as[1];
+            String dst;
+            if(outputpath!=null)
+                dst = outputpath+as[1];
+            else
+                dst = as[1];
             try {
                 // maybe could not create dir ../tmp/..----------------
                 fs = FileSystem.get(URI.create(dst), conf);
@@ -118,33 +181,7 @@ public class MRSVMTrainnFilt {
                 IOUtils.closeStream(out);
                 in.close();
             }
-
-            BufferedReader br = null;
-            String line = null;
-            int k=0;
-            try {
-                br = new BufferedReader(new FileReader(spl));
-                while((line=br.readLine()) != null) {
-                    output.collect(new IntWritable(k++%2), new Text(line));
-                }
-            } catch (IOException e) {
-                throw new IOException("write local file error.");
-            } finally {
-                br.close();
-            }
-
-            output.collect(new IntWritable(2), new Text(dst));
-        }
-    }
-
-    public static class Reduce extends MapReduceBase implements Reducer<IntWritable, Text, Text, Text> {
-        @Override
-        public void reduce(IntWritable key, Iterator<Text> values,
-                           OutputCollector<Text, Text> output, Reporter reporter)
-                throws IOException {
-            while(values.hasNext()) {
-                output.collect(values.next(), new Text(""));
-            }
+            output.collect(new Text(dst), new Text(""));
         }
     }
 }
