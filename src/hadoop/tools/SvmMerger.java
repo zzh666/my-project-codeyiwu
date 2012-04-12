@@ -123,19 +123,29 @@ public class SvmMerger extends Merger{
             bw.newLine();
             String print = "";
             Iterator<Map.Entry<String, Integer>> it = ns.entrySet().iterator();
+            int[] kar = new int[ns.size()];
+            int idx=0;
             while(it.hasNext()) {
                 Map.Entry entry = it.next();
-                print += entry.getKey();
-                print += " ";
+                //print += entry.getKey();
+                //print += " ";
+                kar[idx++] = Integer.getInteger(entry.getKey().toString());
             }
+            if(idx == 2) {
+                if(kar[0] > kar[1]) {
+                    int t = kar[1];
+                    kar[1] = kar[0];
+                    kar[0] = t;
+                }
+            }
+            for(int k=0;k<idx;k++)
+                print += String.valueOf(kar[k]) + " ";
             bw.write("label "+print);
             bw.newLine();
             print = "";
-            it = ns.entrySet().iterator();
-            while(it.hasNext()) {
-                Map.Entry entry = it.next();
-                print += entry.getValue();
-                print += " ";
+            //it = ns.entrySet().iterator();
+            for(int k=0;k<idx;k++) {
+                print += ns.get(String.valueOf(kar[0])) + " ";
             }
             bw.write("nr_sv "+print);
             bw.newLine();
