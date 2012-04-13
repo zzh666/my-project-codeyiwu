@@ -154,34 +154,47 @@ public class MRSVMTrainnFilt {
             }
 
             // upload model file to hdfs in mapping step
-            Configuration conf = new Configuration();
-            InputStream in = null;
-            OutputStream out = null;
-            FileSystem fs;
-            String src = as[1];
-            String dst;
-            if(outputpath!=null)
-                dst = outputpath+as[1];
-            else
-                dst = as[1];
+//            Configuration conf = new Configuration();
+//            InputStream in = null;
+//            OutputStream out = null;
+//            FileSystem fs;
+//            String src = as[1];
+//            String dst;
+//            if(outputpath!=null)
+//                dst = outputpath+as[1];
+//            else
+//                dst = as[1];
+//            try {
+//                // maybe could not create dir ../tmp/..----------------
+//                fs = FileSystem.get(URI.create(dst), conf);
+//                in = new BufferedInputStream(new FileInputStream((as[1])));
+//                out = fs.create(new Path(dst), new Progressable() {
+//                    @Override
+//                    public void progress() {
+//                        System.out.print(".");
+//                    }
+//                });
+//                IOUtils.copyBytes(in, out, 4096, true);
+//            } catch (IOException e) {
+//                throw  new IOException("upload localfile to hdfs error.");
+//            } finally {
+//                IOUtils.closeStream(out);
+//                in.close();
+//            }
+//            output.collect(new Text(dst), new Text(""));
+
+            BufferedReader br = null;
+            String line = null;
             try {
-                // maybe could not create dir ../tmp/..----------------
-                fs = FileSystem.get(URI.create(dst), conf);
-                in = new BufferedInputStream(new FileInputStream((as[1])));
-                out = fs.create(new Path(dst), new Progressable() {
-                    @Override
-                    public void progress() {
-                        System.out.print(".");
-                    }
-                });
-                IOUtils.copyBytes(in, out, 4096, true);
+                br = new BufferedReader(new FileReader(as[1]));
+                while((line=br.readLine()) != null) {
+                    output.collect(new Text(line), new Text(""));
+                }
             } catch (IOException e) {
-                throw  new IOException("upload localfile to hdfs error.");
+                throw new IOException("write local file error.");
             } finally {
-                IOUtils.closeStream(out);
-                in.close();
+                br.close();
             }
-            output.collect(new Text(dst), new Text(""));
         }
     }
 }
