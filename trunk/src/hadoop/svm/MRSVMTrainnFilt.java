@@ -42,7 +42,7 @@ public class MRSVMTrainnFilt {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(Text.class);
         
-        conf.set("intermediate", args[0]);
+        conf.set("rednum", args[0]);
         conf.set("inputpath", args[1]);
         conf.set("outputpath", args[2]);
         
@@ -65,9 +65,13 @@ public class MRSVMTrainnFilt {
         public String inputpath;
         public String outputpath;
         
+        public int rednum=2;
+        
         public void configure(JobConf job) {
             inputpath = job.get("inputpath");
             outputpath = job.get("outputpath");
+            
+            rednum = Integer.valueOf(job.get("rednum"));
         }
         
         public void map(Object key, Text value, OutputCollector<IntWritable, Text> output, Reporter reporter)
@@ -104,7 +108,7 @@ public class MRSVMTrainnFilt {
             try {
                 br = new BufferedReader(new FileReader(spl));
                 while((line=br.readLine()) != null) {
-                    output.collect(new IntWritable(k++%2), new Text(line));
+                    output.collect(new IntWritable(k++%4), new Text(line));
                 }
             } catch (IOException e) {
                 throw new IOException("write local file error.");
