@@ -104,7 +104,7 @@ public class MRSVMTrainnFilt {
             try {
                 br = new BufferedReader(new FileReader(spl));
                 while((line=br.readLine()) != null) {
-                    output.collect(new IntWritable(k++%8), new Text(line));
+                    output.collect(new IntWritable(k++%4), new Text(line));
                 }
             } catch (IOException e) {
                 throw new IOException("write local file error.");
