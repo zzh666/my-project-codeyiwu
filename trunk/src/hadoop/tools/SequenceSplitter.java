@@ -31,12 +31,15 @@ public class SequenceSplitter extends Splitter{
                 int tmp = cnt % splitNum;
                 bws.get(tmp).write(line);
                 bws.get(tmp).newLine();
-                System.out.println("Line: " + String.valueOf(cnt) + " -> splitfile: " + String.valueOf(tmp)
-                +" context: "+line);
+                //System.out.println("Line: " + String.valueOf(cnt) + " -> splitfile: " + String.valueOf(tmp)
+                //+" context: "+line);
                 // flush to disk for each line
-                bws.get(tmp).flush();
+                System.out.println("Line: "+String.valueOf(cnt));
+                //bws.get(tmp).flush();
                 cnt++;
             }
+            for(int i=0;i<splitNum;i++)
+                bws.get(i).flush();
         } catch (Exception e) {
             e.printStackTrace();
             return false;

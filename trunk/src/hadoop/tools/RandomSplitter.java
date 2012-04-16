@@ -33,8 +33,9 @@ public class RandomSplitter extends Splitter{
                 int tmp = (int) (r * splitNum);
                 bws.get(tmp).write(line);
                 bws.get(tmp).newLine();
-                System.out.println("Random var: "+String.valueOf(r)+" Line: " + String.valueOf(cnt)
-                        + " -> splitfile: " + String.valueOf(tmp)+" context: "+line);
+                //System.out.println("Random var: "+String.valueOf(r)+" Line: " + String.valueOf(cnt)
+                        //+ " -> splitfile: " + String.valueOf(tmp)+" context: "+line);
+                System.out.println("Line: "+String.valueOf(cnt));
                 // flush to disk for each line
                 bws.get(tmp).flush();
                 cnt++;
