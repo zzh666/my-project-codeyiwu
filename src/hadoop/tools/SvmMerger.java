@@ -43,26 +43,26 @@ public class SvmMerger extends Merger{
         try {
             for(int i=0;i<brs.size();i++) {
                 br = brs.get(i);
-                line = br.readLine();       //svm_type
+                line = br.readLine().replace("\t","");       //svm_type
                 st = getWord(line, 1);
-                line = br.readLine();       //kernel_type
+                line = br.readLine().replace("\t","");       //kernel_type
                 kt = getWord(line, 1);
-                line = br.readLine();       //gamma
+                line = br.readLine().replace("\t","");       //gamma
                 tmp = getWord(line, 1);
                 gm += Double.valueOf(tmp);
-                line = br.readLine();       //nr_class
+                line = br.readLine().replace("\t","");       //nr_class
                 tmp = getWord(line, 1);
                 nrc = Integer.valueOf(tmp);
-                line = br.readLine();       //total_sv
+                line = br.readLine().replace("\t","");       //total_sv
                 tmp = getWord(line, 1);
                 tsv += Integer.valueOf(tmp);
-                line = br.readLine();       //rho
+                line = br.readLine().replace("\t","");       //rho
                 tmp = getWord(line, 1);
                 rho += Double.valueOf(tmp);
-                line = br.readLine();       //label
+                line = br.readLine().replace("\t","");       //label
                 l1 = getWord(line, 1);
                 l2 = getWord(line, 2);
-                line = br.readLine();       //nr_sv
+                line = br.readLine().replace("\t","");       //nr_sv
                 tmp = getWord(line, 1);
                 int ll1 = Integer.valueOf(l1);
                 int ll2 = Integer.valueOf(l2);
@@ -191,6 +191,7 @@ public class SvmMerger extends Merger{
             e.printStackTrace();
             return false;
         }
+        System.out.println("Finish merging work.");
         return true;
     }
 

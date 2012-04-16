@@ -40,7 +40,7 @@ public class CatMerger extends Merger{
                 while ((line=br.readLine()) !=null) {
                     bw.write(line);
                     bw.newLine();
-                    System.out.println("file: "+i+" -> merge file: context: "+line);
+                    System.out.println("file: "+i+" -> merge file");
                 }
                 bw.flush();
             }catch (IOException e) {
